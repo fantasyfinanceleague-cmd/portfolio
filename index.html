@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Selected Work</title>
+<!--
+  Portfolio — Giorgio Fatica
+  Single self-contained file. Deploy as index.html on Vercel (static, no build step).
+  To add a project: copy one <article class="spec"> block and point its link at the new URL.
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#FAF8F4;
+    --paper-2:#F2EEE6;
+    --ink:#161310;
+    --slate:#6B655C;
+    --line:#DED8CC;
+    --accent:#2B3A55;       /* deep ink-blue, the one quiet accent */
+    --frame:#ffffff;
+    --shadow:18px 18px 40px rgba(22,19,16,.06);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Inter',system-ui,sans-serif;
+    font-size:17px;line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  ::selection{background:var(--accent);color:var(--paper)}
+  a{color:inherit;text-decoration:none}
+
+  .wrap{max-width:1080px;margin:0 auto;padding:0 32px}
+
+  /* ---------- top bar ---------- */
+  .top{display:flex;justify-content:space-between;align-items:baseline;
+    padding:34px 0 0;font-family:'JetBrains Mono',monospace;font-size:12.5px;
+    letter-spacing:.04em;color:var(--slate);text-transform:uppercase}
+  .top .av{color:var(--ink);font-weight:500}
+
+  /* ---------- hero / intro ---------- */
+  .hero{padding:84px 0 64px;border-bottom:1px solid var(--line)}
+  .eyebrow{font-family:'JetBrains Mono',monospace;font-size:12.5px;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--accent);margin-bottom:26px}
+  .hero h1{font-family:'Fraunces',serif;font-weight:500;
+    font-size:clamp(40px,7vw,76px);line-height:1.02;letter-spacing:-.015em;
+    max-width:16ch;margin-bottom:26px}
+  .hero h1 em{font-style:italic;color:var(--accent)}
+  .hero .lede{font-size:clamp(17px,2.2vw,20px);color:var(--slate);max-width:54ch}
+  .hero .lede b{color:var(--ink);font-weight:500}
+
+  /* ---------- section label ---------- */
+  .seclabel{display:flex;align-items:center;gap:16px;padding:54px 0 30px;
+    font-family:'JetBrains Mono',monospace;font-size:12.5px;letter-spacing:.1em;
+    text-transform:uppercase;color:var(--slate)}
+  .seclabel .ln{flex:1;height:1px;background:var(--line)}
+
+  /* ---------- specimen grid ---------- */
+  .specimens{display:flex;flex-direction:column;gap:40px;padding-bottom:20px}
+  .spec{
+    display:grid;grid-template-columns:1.15fr .85fr;gap:0;
+    border:1px solid var(--line);border-radius:4px;background:var(--paper);
+    overflow:hidden;transition:box-shadow .5s cubic-bezier(.2,.7,.2,1),transform .5s cubic-bezier(.2,.7,.2,1),border-color .5s;
+  }
+  .spec:hover{box-shadow:var(--shadow);transform:translateY(-3px);border-color:#cfc7b8}
+
+  /* the framed live preview */
+  .glass{position:relative;background:var(--paper-2);overflow:hidden;
+    min-height:330px;border-right:1px solid var(--line);
+    display:flex;align-items:center;justify-content:center}
+  .spec:nth-child(even) .glass{order:2;border-right:none;border-left:1px solid var(--line)}
+  .glass canvas,.glass svg{display:block;width:100%;height:100%}
+  .glass .corner{position:absolute;width:9px;height:9px;border:1px solid var(--slate);opacity:.35}
+  .glass .corner.tl{top:14px;left:14px;border-right:none;border-bottom:none}
+  .glass .corner.tr{top:14px;right:14px;border-left:none;border-bottom:none}
+  .glass .corner.bl{bottom:14px;left:14px;border-right:none;border-top:none}
+  .glass .corner.br{bottom:14px;right:14px;border-left:none;border-top:none}
+
+  /* card body */
+  .spec .body{padding:34px 36px;display:flex;flex-direction:column;justify-content:space-between}
+  .spec .meta{font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:.06em;
+    text-transform:uppercase;color:var(--slate);display:flex;flex-wrap:wrap;gap:8px 18px;margin-bottom:22px}
+  .spec .meta span{white-space:nowrap}
+  .spec h2{font-family:'Fraunces',serif;font-weight:500;font-size:32px;line-height:1.05;
+    letter-spacing:-.01em;margin-bottom:14px}
+  .spec .desc{color:var(--slate);font-size:16px;margin-bottom:28px}
+  .spec .desc b{color:var(--ink);font-weight:500}
+  .spec .go{display:inline-flex;align-items:center;gap:9px;align-self:flex-start;
+    font-family:'JetBrains Mono',monospace;font-size:12.5px;letter-spacing:.06em;
+    text-transform:uppercase;color:var(--ink);border-bottom:1.5px solid var(--ink);
+    padding-bottom:3px;transition:gap .3s,color .3s,border-color .3s}
+  .spec .go:hover{gap:15px;color:var(--accent);border-color:var(--accent)}
+  .spec .go .ar{transition:transform .3s}
+  .spec .go:hover .ar{transform:translateX(3px)}
+
+  /* ---------- about / contact ---------- */
+  .about{margin-top:70px;padding:64px 0 30px;border-top:1px solid var(--line)}
+  .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px}
+  .about h3{font-family:'Fraunces',serif;font-weight:500;font-size:30px;letter-spacing:-.01em;margin-bottom:18px}
+  .about p{color:var(--slate);max-width:46ch}
+  .about p + p{margin-top:14px}
+  .contact{display:flex;flex-direction:column;gap:2px}
+  .contact .clabel{font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:.1em;
+    text-transform:uppercase;color:var(--slate);margin-bottom:16px}
+  .contact a{display:flex;justify-content:space-between;align-items:center;
+    padding:15px 0;border-top:1px solid var(--line);font-size:16px;transition:color .25s,padding .25s}
+  .contact a:last-child{border-bottom:1px solid var(--line)}
+  .contact a:hover{color:var(--accent);padding-left:8px}
+  .contact a .k{font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:.06em;
+    text-transform:uppercase;color:var(--slate)}
+
+  footer{padding:50px 0 60px;font-family:'JetBrains Mono',monospace;font-size:11.5px;
+    letter-spacing:.06em;text-transform:uppercase;color:var(--slate);
+    display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+
+  @media(max-width:760px){
+    .wrap{padding:0 22px}
+    .spec{grid-template-columns:1fr}
+    .glass{order:-1!important;border-right:none!important;border-left:none!important;
+      border-bottom:1px solid var(--line);min-height:240px}
+    .spec:nth-child(even) .glass{order:-1}
+    .about-grid{grid-template-columns:1fr;gap:36px}
+    .hero{padding:60px 0 48px}
+  }
+  @media(prefers-reduced-motion:reduce){
+    *{animation:none!important;transition:none!important}
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <div class="top">
+    <span class="av">Giorgio Fatica</span>
+    <span>Selected Work · 2026</span>
+  </div>
+
+  <!-- ───────────── HERO ───────────── -->
+  <header class="hero">
+    <div class="eyebrow">Data Analytics · Strategy · Fintech</div>
+    <h1>I turn data into things <em>worth looking at</em>.</h1>
+    <p class="lede">Data and business analyst by trade, with a background in statistics and data science. These are projects I build on my own time — <b>sports analytics and fintech, the two spaces I can't stop poking at.</b> Each one is a live, working build, not a mockup.</p>
+  </header>
+
+  <!-- ───────────── SPECIMENS ───────────── -->
+  <div class="seclabel"><span>The Work</span><span class="ln"></span><span>02 projects</span></div>
+
+  <div class="specimens">
+
+    <!-- ===== PROJECT 1 — World Cup (live miniature, real) ===== -->
+    <article class="spec">
+      <div class="glass">
+        <span class="corner tl"></span><span class="corner tr"></span>
+        <span class="corner bl"></span><span class="corner br"></span>
+        <canvas id="wc-canvas"></canvas>
+      </div>
+      <div class="body">
+        <div>
+          <div class="meta"><span>2026</span><span>Data Viz</span><span>HTML · SVG · JS</span><span>Self-directed</span></div>
+          <h2>The Long Haul</h2>
+          <p class="desc">How far every team at the 2026 World Cup travels in the group stage — mapped, ranked, and pulled apart by <b>draw luck vs. base-camp choice</b>, with a verified match schedule and 150+ real training facilities.</p>
+        </div>
+        <a class="go" href="https://worldcup-travel.vercel.app/" target="_blank" rel="noopener">View live <span class="ar">→</span></a>
+      </div>
+    </article>
+
+    <!-- ===== PROJECT 2 — Fantasy Stock App (placeholder preview) ===== -->
+    <article class="spec">
+      <div class="glass">
+        <span class="corner tl"></span><span class="corner tr"></span>
+        <span class="corner bl"></span><span class="corner br"></span>
+        <canvas id="st-canvas"></canvas>
+      </div>
+      <div class="body">
+        <div>
+          <div class="meta"><span>2026</span><span>Product · Web App</span><span>React · Vite</span><span>Self-directed</span></div>
+          <h2>Stockpile</h2>
+          <p class="desc">Fantasy sports for the stock market — <b>draft real stocks, compete weekly head-to-head, climb the league</b>. Scores are live portfolio returns pulled from real market data: no fantasy points, no proxies, no money.</p>
+        </div>
+        <a class="go" href="https://fantasy-stock-app.vercel.app/" target="_blank" rel="noopener">View live <span class="ar">→</span></a>
+      </div>
+    </article>
+
+  </div>
+
+  <!-- ───────────── ABOUT / CONTACT ───────────── -->
+  <section class="about">
+    <div class="about-grid">
+      <div>
+        <h3>About</h3>
+        <p>I'm a data and business analyst with a background grounded in statistics and data science. My day-to-day is turning messy data into decisions; I'm drawn to data analytics, strategy and operations, and the fintech space.</p>
+        <p>Outside of work, I build. Sports analytics and fintech are where my curiosity lives, so the projects here are the ones I make in my own time — digging into a question, finding real data, and turning it into something interactive worth sharing.</p>
+      </div>
+      <div class="contact">
+        <div class="clabel">Get in touch</div>
+        <a href="mailto:giorgiolinus@gmail.com"><span>Email</span><span class="k">giorgiolinus@gmail.com →</span></a>
+        <a href="https://github.com/fantasyfinanceleague-cmd" target="_blank" rel="noopener"><span>GitHub</span><span class="k">@fantasyfinanceleague-cmd →</span></a>
+        <a href="https://www.linkedin.com/in/giorgio-fatica/" target="_blank" rel="noopener"><span>LinkedIn</span><span class="k">in/giorgio-fatica →</span></a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span>© 2026 — Giorgio Fatica</span>
+    <span>Built from scratch</span>
+  </footer>
+
+</div>
+
+<script>
+/* ──────────────────────────────────────────────────────────────
+   Live in-frame previews. Each canvas runs a tiny ambient loop
+   that animates only while visible and pauses off-screen.
+   World Cup = flight arcs over a stylised continent.
+   Stock app = a living market line + ticker bars (placeholder).
+   Respects prefers-reduced-motion (renders one static frame).
+   ────────────────────────────────────────────────────────────── */
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const C = {ink:'#161310', slate:'#6B655C', accent:'#2B3A55', paper2:'#F2EEE6',
+           wc1:'#2B3A55', wc2:'#B5462F', stUp:'#2f6b4f', stDown:'#B5462F'};
+
+function fit(canvas){
+  const dpr=Math.min(devicePixelRatio||1,2);
+  const r=canvas.parentElement.getBoundingClientRect();
+  canvas.width=r.width*dpr; canvas.height=r.height*dpr;
+  const ctx=canvas.getContext('2d'); ctx.setTransform(dpr,0,0,dpr,0,0);
+  return {ctx,w:r.width,h:r.height};
+}
+
+/* ---------- Project 1: World Cup flight arcs ---------- */
+(function(){
+  const cv=document.getElementById('wc-canvas'); if(!cv) return;
+  let ctx,w,h, t=0, running=false;
+  // a handful of "city" nodes laid out like a loose North-American spread
+  let nodes=[];
+  function layout(){
+    ({ctx,w,h}=fit(cv));
+    nodes=[
+      [.18,.30],[.30,.62],[.46,.40],[.58,.70],[.50,.22],
+      [.70,.50],[.80,.30],[.66,.28],[.38,.80],[.86,.62]
+    ].map(([x,y])=>[x*w,y*h]);
+  }
+  layout(); addEventListener('resize',layout);
+
+  // arcs connect random node pairs, drawing then fading
+  const arcs=[];
+  function spawn(){
+    const a=nodes[(Math.random()*nodes.length)|0];
+    const b=nodes[(Math.random()*nodes.length)|0];
+    if(a===b) return;
+    arcs.push({a,b,p:0,life:0,col:Math.random()<.5?C.wc1:C.wc2});
+  }
+  function draw(){
+    if(!running) return;
+    ctx.clearRect(0,0,w,h);
+    // faint baseline grid of dots (the "continent")
+    ctx.fillStyle='rgba(107,101,92,.22)';
+    nodes.forEach(([x,y])=>{ctx.beginPath();ctx.arc(x,y,2.2,0,7);ctx.fill();});
+    // occasional new arc
+    if(Math.random()<.04 && arcs.length<7) spawn();
+    for(let i=arcs.length-1;i>=0;i--){
+      const A=arcs[i]; A.p=Math.min(1,A.p+0.012); if(A.p>=1)A.life+=1;
+      const [x1,y1]=A.a,[x2,y2]=A.b;
+      const mx=(x1+x2)/2, my=(y1+y2)/2 - Math.hypot(x2-x1,y2-y1)*0.28;
+      // draw partial quadratic arc up to progress p
+      ctx.strokeStyle=A.col; ctx.globalAlpha=Math.max(0,1-A.life/90)*0.8;
+      ctx.lineWidth=1.4; ctx.beginPath();
+      const steps=24, end=Math.floor(steps*A.p);
+      for(let s=0;s<=end;s++){
+        const u=s/steps, ix=(1-u)*(1-u)*x1+2*(1-u)*u*mx+u*u*x2,
+              iy=(1-u)*(1-u)*y1+2*(1-u)*u*my+u*u*y2;
+        s===0?ctx.moveTo(ix,iy):ctx.lineTo(ix,iy);
+      }
+      ctx.stroke();
+      // moving head dot
+      if(A.p<1){
+        const u=A.p, hx=(1-u)*(1-u)*x1+2*(1-u)*u*mx+u*u*x2,
+              hy=(1-u)*(1-u)*y1+2*(1-u)*u*my+u*u*y2;
+        ctx.globalAlpha=1; ctx.fillStyle=A.col;
+        ctx.beginPath();ctx.arc(hx,hy,2.6,0,7);ctx.fill();
+      }
+      if(A.life>90) arcs.splice(i,1);
+    }
+    ctx.globalAlpha=1; t++;
+    requestAnimationFrame(draw);
+  }
+  const io=new IntersectionObserver(es=>es.forEach(e=>{
+    running=e.isIntersecting;
+    if(running){ if(reduce){layout();/*one frame*/ ctx.clearRect(0,0,w,h);
+      ctx.fillStyle='rgba(107,101,92,.22)';nodes.forEach(([x,y])=>{ctx.beginPath();ctx.arc(x,y,2.2,0,7);ctx.fill();});}
+      else requestAnimationFrame(draw);}
+  }),{threshold:.1});
+  io.observe(cv);
+})();
+
+/* ---------- Project 2: Stockpile — ticker tape + portfolio sparkline ---------- */
+(function(){
+  const cv=document.getElementById('st-canvas'); if(!cv) return;
+  const TEAL='#0FB5A6', UP='#0FB5A6', DOWN='#E0533D', INK='#161310', MUT='rgba(107,101,92,.55)';
+  let ctx,w,h, running=false, series=[], tickerX=0;
+  const TICK=['AAPL','MSFT','NVDA','TSLA','GOOGL','META','AMZN','PLTR'];
+  function layout(){
+    ({ctx,w,h}=fit(cv));
+    if(!series.length){ let v=h*0.6; for(let i=0;i<64;i++){ v+=(Math.random()-0.52)*h*0.022; v=Math.max(h*0.34,Math.min(h*0.66,v)); series.push(v);} }
+  }
+  layout(); addEventListener('resize',()=>{series=[];tickerX=0;layout();});
+  function draw(){
+    if(!running) return;
+    ctx.clearRect(0,0,w,h);
+    const padX=20, topBand=26;
+
+    // ticker tape
+    ctx.font='600 10px "JetBrains Mono", monospace'; ctx.textBaseline='middle';
+    let x=tickerX, i=0;
+    while(x < w+140){
+      const sym=TICK[i%TICK.length];
+      const up=(i*7)%3!==0;
+      const txt=sym+'  '+(up?'+':'\u2212')+(((i*13)%9)/10+0.3).toFixed(2)+'%';
+      ctx.fillStyle=up?UP:DOWN; ctx.fillText(txt,x,topBand/2);
+      x += ctx.measureText(txt).width + 26; i++;
+    }
+    tickerX -= 0.5;
+    const fw=ctx.measureText(TICK[0]+'  +0.30%').width+26;
+    if(tickerX < -fw) tickerX += fw;
+    ctx.strokeStyle='rgba(222,216,204,.9)'; ctx.lineWidth=1;
+    ctx.beginPath();ctx.moveTo(0,topBand);ctx.lineTo(w,topBand);ctx.stroke();
+
+    // sparkline
+    if(Math.random()<.45){ const last=series[series.length-1];
+      let v=last+(Math.random()-0.48)*h*0.024; v=Math.max(h*0.36,Math.min(h*0.66,v));
+      series.push(v); if(series.length>64) series.shift(); }
+    const gx0=padX, gx1=w-padX, gy0=topBand+22, gy1=h-44;
+    const n=series.length, sx=(gx1-gx0)/(n-1);
+    const mn=Math.min(...series), mx2=Math.max(...series);
+    const norm=y=> gy0 + (1-((y-mn)/(mx2-mn+1)))*(gy1-gy0)*-1*-1; // keep orientation
+    const ny=y=> gy0 + ((y-mn)/(mx2-mn+1))*(gy1-gy0);
+    ctx.beginPath();
+    series.forEach((y,k)=>{const px=gx0+k*sx,py=ny(y);k===0?ctx.moveTo(px,py):ctx.lineTo(px,py);});
+    ctx.lineTo(gx1,gy1);ctx.lineTo(gx0,gy1);ctx.closePath();
+    const grad=ctx.createLinearGradient(0,gy0,0,gy1);
+    grad.addColorStop(0,'rgba(15,181,166,.18)');grad.addColorStop(1,'rgba(15,181,166,0)');
+    ctx.fillStyle=grad;ctx.fill();
+    ctx.beginPath();
+    series.forEach((y,k)=>{const px=gx0+k*sx,py=ny(y);k===0?ctx.moveTo(px,py):ctx.lineTo(px,py);});
+    ctx.strokeStyle=TEAL;ctx.lineWidth=2;ctx.stroke();
+    const hy=ny(series[n-1]); ctx.fillStyle=TEAL;ctx.beginPath();ctx.arc(gx1,hy,3,0,7);ctx.fill();
+
+    // portfolio label
+    ctx.textBaseline='alphabetic';
+    ctx.fillStyle=MUT; ctx.font='500 9px "JetBrains Mono", monospace';
+    ctx.fillText('PORTFOLIO \u00b7 LIVE', gx0, gy0-6);
+    ctx.fillStyle=INK; ctx.font='600 15px "JetBrains Mono", monospace';
+    const cents=('0'+(((Date.now()/700)|0)%60)).slice(-2);
+    ctx.fillText('$12,430.'+cents, gx0, gy0+11);
+
+    // movers row
+    ctx.font='500 9.5px "JetBrains Mono", monospace'; ctx.textBaseline='middle';
+    let mxp=gx0; const my=h-20;
+    [['NVDA','+3.8'],['PLTR','+5.1'],['TSLA','\u22120.5']].forEach(([s,v])=>{
+      ctx.fillStyle=INK; ctx.fillText(s,mxp,my);
+      const vw=ctx.measureText(s).width;
+      ctx.fillStyle=v[0]==='+'?UP:DOWN; ctx.fillText(' '+v, mxp+vw+2, my);
+      mxp += vw + ctx.measureText(' '+v).width + 22;
+    });
+    requestAnimationFrame(draw);
+  }
+  const io=new IntersectionObserver(es=>es.forEach(e=>{
+    running=e.isIntersecting;
+    if(running){ layout(); if(reduce){running=true;draw();running=false;} else requestAnimationFrame(draw); }
+  }),{threshold:.1});
+  io.observe(cv);
+})();
+</script>
+</body>
+</html>
