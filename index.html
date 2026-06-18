@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Selected Work</title>
 <!--
-  Portfolio — Giorgio Fatica
+  Portfolio - Giorgio Fatica
   Single self-contained file. Deploy as index.html on Vercel (static, no build step).
   To add a project: copy one <article class="spec"> block and point its link at the new URL.
 -->
@@ -144,9 +144,9 @@
 
   <!-- ───────────── HERO ───────────── -->
   <header class="hero">
-    <div class="eyebrow">Data Analytics · Strategy · Fintech</div>
-    <h1>I turn data into things <em>worth looking at</em>.</h1>
-    <p class="lede">Data and business analyst by trade, with a background in statistics and data science. These are projects I build on my own time — <b>sports analytics and fintech, the two spaces I can't stop poking at.</b> Each one is a live, working build, not a mockup.</p>
+    <div class="eyebrow">Data Analytics · Sports · Fintech</div>
+    <h1>Welcome to my <em>portfolio</em>.</h1>
+    <p class="lede">An ever-growing collection of projects that sit at the cross-section of my three biggest interests: data analytics, sports, and fintech. Each one is a live, working build, not a mockup.</p>
   </header>
 
   <!-- ───────────── SPECIMENS ───────────── -->
@@ -154,7 +154,7 @@
 
   <div class="specimens">
 
-    <!-- ===== PROJECT 1 — World Cup (live miniature, real) ===== -->
+    <!-- ===== PROJECT 1 - World Cup (live miniature, real) ===== -->
     <article class="spec">
       <div class="glass">
         <span class="corner tl"></span><span class="corner tr"></span>
@@ -165,13 +165,13 @@
         <div>
           <div class="meta"><span>2026</span><span>Data Viz</span><span>HTML · SVG · JS</span><span>Self-directed</span></div>
           <h2>The Long Haul</h2>
-          <p class="desc">How far every team at the 2026 World Cup travels in the group stage — mapped, ranked, and pulled apart by <b>draw luck vs. base-camp choice</b>, with a verified match schedule and 150+ real training facilities.</p>
+          <p class="desc">How far every team at the 2026 World Cup travels in the group stage: mapped, ranked, and pulled apart by <b>draw luck vs. base-camp choice</b>, with a verified match schedule and 150+ real training facilities.</p>
         </div>
         <a class="go" href="https://worldcup-travel.vercel.app/" target="_blank" rel="noopener">View live <span class="ar">→</span></a>
       </div>
     </article>
 
-    <!-- ===== PROJECT 2 — Fantasy Stock App (placeholder preview) ===== -->
+    <!-- ===== PROJECT 2 - Fantasy Stock App (placeholder preview) ===== -->
     <article class="spec">
       <div class="glass">
         <span class="corner tl"></span><span class="corner tr"></span>
@@ -182,7 +182,7 @@
         <div>
           <div class="meta"><span>2026</span><span>Product · Web App</span><span>React · Vite</span><span>Self-directed</span></div>
           <h2>Stockpile</h2>
-          <p class="desc">Fantasy sports for the stock market — <b>draft real stocks, compete weekly head-to-head, climb the league</b>. Scores are live portfolio returns pulled from real market data: no fantasy points, no proxies, no money.</p>
+          <p class="desc">Fantasy sports for the stock market. <b>Draft real stocks, compete weekly head-to-head, climb the league</b>. Scores are live portfolio returns pulled from real market data: no fantasy points, no proxies, no money.</p>
         </div>
         <a class="go" href="https://fantasy-stock-app.vercel.app/" target="_blank" rel="noopener">View live <span class="ar">→</span></a>
       </div>
@@ -195,8 +195,8 @@
     <div class="about-grid">
       <div>
         <h3>About</h3>
-        <p>I'm a data and business analyst with a background grounded in statistics and data science. My day-to-day is turning messy data into decisions; I'm drawn to data analytics, strategy and operations, and the fintech space.</p>
-        <p>Outside of work, I build. Sports analytics and fintech are where my curiosity lives, so the projects here are the ones I make in my own time — digging into a question, finding real data, and turning it into something interactive worth sharing.</p>
+        <p>My background is rooted in statistics and data science, with professional experience as a project analyst and senior business analyst. I love finding insights in data that can drive strategy and help make informed decisions.</p>
+        <p>The projects above sit at the intersection of that analytical work and my own interests. Sports analytics and fintech are where my curiosity lives, so these are the ones I build in my own time: starting with a question, finding real data, and turning it into something interactive worth sharing.</p>
       </div>
       <div class="contact">
         <div class="clabel">Get in touch</div>
@@ -208,7 +208,7 @@
   </section>
 
   <footer>
-    <span>© 2026 — Giorgio Fatica</span>
+    <span>© 2026 · Giorgio Fatica</span>
     <span>Built from scratch</span>
   </footer>
 
@@ -300,19 +300,22 @@ function fit(canvas){
   io.observe(cv);
 })();
 
-/* ---------- Project 2: Stockpile — ticker tape + portfolio sparkline ---------- */
+/* ---------- Project 2: Stockpile - ticker tape + portfolio sparkline ---------- */
 (function(){
   const cv=document.getElementById('st-canvas'); if(!cv) return;
   const TEAL='#0FB5A6', UP='#0FB5A6', DOWN='#E0533D', INK='#161310', MUT='rgba(107,101,92,.55)';
-  let ctx,w,h, running=false, series=[], tickerX=0;
+  let ctx,w,h, running=false, series=[], tickerX=0, lastT=0, acc=0;
+  const STEP_MS=450;   // advance the line about twice a second (lively but not jittery)
   const TICK=['AAPL','MSFT','NVDA','TSLA','GOOGL','META','AMZN','PLTR'];
   function layout(){
     ({ctx,w,h}=fit(cv));
     if(!series.length){ let v=h*0.6; for(let i=0;i<64;i++){ v+=(Math.random()-0.52)*h*0.022; v=Math.max(h*0.34,Math.min(h*0.66,v)); series.push(v);} }
   }
   layout(); addEventListener('resize',()=>{series=[];tickerX=0;layout();});
-  function draw(){
+  function draw(ts){
     if(!running) return;
+    if(!lastT) lastT=ts||0;
+    const dt=Math.min(100,(ts||0)-lastT); lastT=ts||0; acc+=dt;
     ctx.clearRect(0,0,w,h);
     const padX=20, topBand=26;
 
@@ -326,16 +329,19 @@ function fit(canvas){
       ctx.fillStyle=up?UP:DOWN; ctx.fillText(txt,x,topBand/2);
       x += ctx.measureText(txt).width + 26; i++;
     }
-    tickerX -= 0.5;
+    tickerX -= 0.4;
     const fw=ctx.measureText(TICK[0]+'  +0.30%').width+26;
     if(tickerX < -fw) tickerX += fw;
     ctx.strokeStyle='rgba(222,216,204,.9)'; ctx.lineWidth=1;
     ctx.beginPath();ctx.moveTo(0,topBand);ctx.lineTo(w,topBand);ctx.stroke();
 
-    // sparkline
-    if(Math.random()<.45){ const last=series[series.length-1];
-      let v=last+(Math.random()-0.48)*h*0.024; v=Math.max(h*0.36,Math.min(h*0.66,v));
-      series.push(v); if(series.length>64) series.shift(); }
+    // sparkline: advance on a fixed cadence so it drifts calmly, not every frame
+    if(acc>=STEP_MS){
+      acc-=STEP_MS;
+      const last=series[series.length-1];
+      let v=last+(Math.random()-0.5)*h*0.05; v=Math.max(h*0.36,Math.min(h*0.66,v));
+      series.push(v); if(series.length>64) series.shift();
+    }
     const gx0=padX, gx1=w-padX, gy0=topBand+22, gy1=h-44;
     const n=series.length, sx=(gx1-gx0)/(n-1);
     const mn=Math.min(...series), mx2=Math.max(...series);
@@ -373,7 +379,7 @@ function fit(canvas){
   }
   const io=new IntersectionObserver(es=>es.forEach(e=>{
     running=e.isIntersecting;
-    if(running){ layout(); if(reduce){running=true;draw();running=false;} else requestAnimationFrame(draw); }
+    if(running){ layout(); lastT=0; acc=0; if(reduce){running=true;draw();running=false;} else requestAnimationFrame(draw); }
   }),{threshold:.1});
   io.observe(cv);
 })();
